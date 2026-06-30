@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { Loader2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -110,11 +111,12 @@ export function StudyForm() {
               />
             </div>
             <Button type="submit" disabled={isLoading || !reference.trim()} className="self-start">
+              {isLoading && <Loader2Icon className="animate-spin" />}
               {phase === "loading-study"
                 ? "Looking up passage..."
                 : phase === "streaming-guide"
                 ? "Generating study guide..."
-                : "Generate study guide"}
+                : "Generate Study Guide"}
             </Button>
           </form>
         </CardContent>
