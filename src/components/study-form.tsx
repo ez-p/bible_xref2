@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { StudyResults } from "@/components/study-results";
 import type { StudyData } from "@/lib/types";
 
@@ -110,14 +115,55 @@ export function StudyForm() {
                 rows={3}
               />
             </div>
-            <Button type="submit" disabled={isLoading || !reference.trim()} className="self-start">
-              {isLoading && <Loader2Icon className="animate-spin" />}
-              {phase === "loading-study"
-                ? "Looking up passage..."
-                : phase === "streaming-guide"
-                ? "Generating study guide..."
-                : "Generate Study Guide"}
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button type="submit" disabled={isLoading || !reference.trim()}>
+                {isLoading && <Loader2Icon className="animate-spin" />}
+                {phase === "loading-study"
+                  ? "Looking up passage..."
+                  : phase === "streaming-guide"
+                  ? "Generating study guide..."
+                  : "Generate Study Guide"}
+              </Button>
+              <Popover>
+                <PopoverTrigger
+                  className="cursor-pointer text-sm font-medium text-amber-600 underline decoration-dotted underline-offset-4 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
+                  render={<span />}
+                  nativeButton={false}
+                >
+                  How does this work?
+                </PopoverTrigger>
+                <PopoverContent className="w-96">
+                  <div className="flex flex-col gap-2 text-sm">
+                    <p className="font-medium">How this works</p>
+                    <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground">
+                      <li>
+                        Enter a verse or range, e.g. <span className="text-foreground">John 3:16</span> or{" "}
+                        <span className="text-foreground">Romans 8:8-16</span>. Most common formats and
+                        abbreviations work.
+                      </li>
+                      <li>
+                        Optionally add a study question to focus the guide on something specific you want
+                        to explore.
+                      </li>
+                      <li>
+                        The original passage is fetched from the ESV Bible, and Claude (Anthropic&apos;s AI)
+                        selects 5&ndash;10 of the most relevant cross-reference verses from elsewhere in
+                        Scripture.
+                      </li>
+                      <li>
+                        Each cross-reference&apos;s text is fetched, then a full study guide streams in with
+                        passage context, the cross-references and how they relate, key themes &amp;
+                        application, and discussion questions.
+                      </li>
+                      <li>
+                        Hover or click any verse reference to preview its text inline. Use Copy or Export
+                        to save the finished guide.
+                      </li>
+                    </ol>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
           </form>
         </CardContent>
       </Card>

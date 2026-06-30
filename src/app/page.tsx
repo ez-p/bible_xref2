@@ -8,8 +8,8 @@ export default function Home() {
           Bible Contextual Study Guide
         </h1>
         <p className="text-muted-foreground">
-          Enter a verse or range and an optional study question. Claude will find relevant
-          cross-references and generate a contextual study guide from the ESV text.
+          Enter a verse or verse range and an optional study question. Bible cross-references
+          will be discovered automatically and a contextual study guide will be generated.
         </p>
       </div>
       <StudyForm />
