@@ -115,7 +115,7 @@ export function StudyForm() {
                 rows={3}
               />
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col items-start gap-2">
               <Button type="submit" disabled={isLoading || !reference.trim()}>
                 {isLoading && <Loader2Icon className="animate-spin" />}
                 {phase === "loading-study"
@@ -126,7 +126,7 @@ export function StudyForm() {
               </Button>
               <Popover>
                 <PopoverTrigger
-                  className="cursor-pointer text-sm font-medium text-amber-600 underline decoration-dotted underline-offset-4 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
+                  className="w-full text-center cursor-pointer text-sm font-medium text-amber-600 underline decoration-dotted underline-offset-4 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
                   render={<span />}
                   nativeButton={false}
                 >
