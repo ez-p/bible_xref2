@@ -94,6 +94,16 @@ export function StudyResults({
             ) : null}
           </CardContent>
         </Card>
+        {guide && !isStreaming && (
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" size="sm" onClick={handleCopy}>
+              Copy
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleExport}>
+              Export
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
