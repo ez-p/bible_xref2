@@ -137,23 +137,24 @@ export function StudyForm() {
                     <p className="font-medium">How this works</p>
                     <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground">
                       <li>
-                        Enter a verse or range, e.g. <span className="text-foreground">John 3:16</span> or{" "}
-                        <span className="text-foreground">Romans 8:8-16</span>. Most common formats and
-                        abbreviations work.
+                        Enter a Bible verse or a small range of Bible verses (e.g.{" "}
+                        <span className="text-foreground">John 3:16</span> or{" "}
+                        <span className="text-foreground">John 3:16-18</span>). Most common Bible verse
+                        formats and abbreviations work.
                       </li>
                       <li>
-                        Optionally add a study question to focus the guide on something specific you want
-                        to explore.
+                        Optionally add a study question to focus on something specific you want to
+                        explore.
                       </li>
                       <li>
-                        The original passage is fetched from the ESV Bible, and Claude (Anthropic&apos;s AI)
-                        selects 5&ndash;10 of the most relevant cross-reference verses from elsewhere in
-                        Scripture.
+                        The most relevant cross-reference verses from elsewhere in Scripture are selected
+                        based on your original Bible passage for comparison.
                       </li>
                       <li>
-                        Each cross-reference&apos;s text is fetched, then a full study guide streams in with
-                        passage context, the cross-references and how they relate, key themes &amp;
-                        application, and discussion questions.
+                        Each cross-referenced Bible verse is fetched, then a full study guide is
+                        generated with passage context, the cross-references and how they relate. Key
+                        themes, application, and discussion questions are generated from the Bible
+                        passages.
                       </li>
                       <li>
                         Hover or click any verse reference to preview its text inline. Use Copy or Export
