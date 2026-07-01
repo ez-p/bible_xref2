@@ -19,6 +19,7 @@ export class EsvApiError extends Error {
 }
 
 const MAX_CACHE_ENTRIES = 2000;
+const FETCH_TIMEOUT_MS = 10_000;
 
 const cache = new Map<string, Passage>();
 
@@ -46,8 +47,12 @@ async function fetchFromEsv(reference: string, params: Record<string, string>): 
   try {
     res = await fetch(url.toString(), {
       headers: { Authorization: `Token ${token}` },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
-  } catch {
+  } catch (err) {
+    if (err instanceof Error && err.name === "TimeoutError") {
+      throw new EsvApiError("Timed out reaching the ESV API. Please try again.", 504);
+    }
     throw new EsvApiError("Failed to reach the ESV API", 502);
   }
 
