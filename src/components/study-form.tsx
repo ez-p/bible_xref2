@@ -164,6 +164,14 @@ export function StudyForm() {
                         Use Export or Print to save the finished guide.
                       </li>
                     </ol>
+                    <p className="font-medium">Study Question</p>
+                    <p className="text-muted-foreground">
+                      Your study question shapes the tone/focus of the generated study guide — your
+                      question will be woven throughout the output (Passage Summary &amp; Context,
+                      Cross-References, Themes &amp; Application, and the Discussion/Reflection
+                      Questions). Get creative to generate unique and interesting studies using the
+                      Study Question!
+                    </p>
                   </div>
                 </PopoverContent>
               </Popover>
