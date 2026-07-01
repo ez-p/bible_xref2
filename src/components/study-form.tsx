@@ -170,7 +170,7 @@ export function StudyForm() {
                       question will be woven throughout the output (Passage Summary &amp; Context,
                       Cross-References, Themes &amp; Application, and the Discussion/Reflection
                       Questions). Get creative to generate unique and interesting studies using the
-                      Study Question!
+                      study question!
                     </p>
                   </div>
                 </PopoverContent>
