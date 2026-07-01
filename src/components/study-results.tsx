@@ -32,7 +32,7 @@ export function StudyResults({
 
   return (
     <div className="flex flex-col gap-6">
-      <Card>
+      <Card className="bg-white">
         <CardHeader>
           <CardTitle>{data.passage.canonical}</CardTitle>
         </CardHeader>
@@ -45,7 +45,7 @@ export function StudyResults({
         <h2 className="text-lg font-medium">Cross-References</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {data.references.map((ref) => (
-            <Card key={ref.reference}>
+            <Card key={ref.reference} className="bg-white">
               <CardHeader>
                 <CardTitle className="text-sm">{ref.reference}</CardTitle>
               </CardHeader>
@@ -62,25 +62,15 @@ export function StudyResults({
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-medium">Study Guide</h2>
           <div className="flex gap-2 print:hidden">
-            <Button
-              size="sm"
-              onClick={handleExport}
-              disabled={!guide}
-              className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-            >
+            <Button variant="outline" size="sm" onClick={handleExport} disabled={!guide}>
               Export
             </Button>
-            <Button
-              size="sm"
-              onClick={handlePrint}
-              disabled={!guide}
-              className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-            >
+            <Button variant="outline" size="sm" onClick={handlePrint} disabled={!guide}>
               Print
             </Button>
           </div>
         </div>
-        <Card>
+        <Card className="bg-white">
           <CardContent>
             {guide ? (
               <Markdown>{guide}</Markdown>
