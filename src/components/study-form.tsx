@@ -86,7 +86,7 @@ export function StudyForm() {
 
   return (
     <div className="flex flex-col gap-8">
-      <Card>
+      <Card className="print:hidden">
         <CardContent>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
@@ -157,7 +157,7 @@ export function StudyForm() {
                         passages.
                       </li>
                       <li>
-                        Use Copy or Export to save the finished guide.
+                        Use Export or Print to save the finished guide.
                       </li>
                     </ol>
                   </div>

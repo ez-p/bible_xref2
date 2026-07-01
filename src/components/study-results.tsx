@@ -1,6 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,15 +15,6 @@ export function StudyResults({
   guide: string;
   isStreaming: boolean;
 }) {
-  async function handleCopy() {
-    try {
-      await navigator.clipboard.writeText(guide);
-      toast.success("Study guide copied to clipboard.");
-    } catch {
-      toast.error("Couldn't copy to clipboard.");
-    }
-  }
-
   function handleExport() {
     const blob = new Blob([guide], { type: "text/markdown;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -33,6 +23,10 @@ export function StudyResults({
     a.download = `${data.passage.canonical.replace(/[^a-z0-9]+/gi, "-")}-study-guide.md`;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  function handlePrint() {
+    window.print();
   }
 
   return (
@@ -66,12 +60,22 @@ export function StudyResults({
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-medium">Study Guide</h2>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={handleCopy} disabled={!guide}>
-              Copy
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleExport} disabled={!guide}>
+          <div className="flex gap-2 print:hidden">
+            <Button
+              size="sm"
+              onClick={handleExport}
+              disabled={!guide}
+              className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+            >
               Export
+            </Button>
+            <Button
+              size="sm"
+              onClick={handlePrint}
+              disabled={!guide}
+              className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+            >
+              Print
             </Button>
           </div>
         </div>
@@ -90,12 +94,12 @@ export function StudyResults({
           </CardContent>
         </Card>
         {guide && !isStreaming && (
-          <div className="flex justify-end gap-2">
-            <Button variant="outline" size="sm" onClick={handleCopy}>
-              Copy
-            </Button>
+          <div className="flex justify-end gap-2 print:hidden">
             <Button variant="outline" size="sm" onClick={handleExport}>
               Export
+            </Button>
+            <Button variant="outline" size="sm" onClick={handlePrint}>
+              Print
             </Button>
           </div>
         )}
