@@ -157,8 +157,7 @@ export function StudyForm() {
                         passages.
                       </li>
                       <li>
-                        Hover or click any verse reference to preview its text inline. Use Copy or Export
-                        to save the finished guide.
+                        Use Copy or Export to save the finished guide.
                       </li>
                     </ol>
                   </div>

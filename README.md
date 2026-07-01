@@ -47,8 +47,6 @@ Open http://localhost:3000.
 3. **Fetch each cross-reference's text** from the ESV API (cached in-memory per request process to avoid duplicate calls).
 4. **Stream the study guide** (`/api/guide`) using `messages.stream`, rendering Markdown with four sections: Passage Summary & Context, Cross-References, Themes & Application, and Discussion/Reflection Questions.
 
-Any verse reference shown in the UI is hoverable/clickable — it lazily fetches `/api/verse` and shows the text in a popover.
-
 ## Build
 
 ```bash
@@ -73,11 +71,9 @@ src/
     api/
       study/route.ts       # ESV passage + Claude structured cross-refs + ESV ref text
       guide/route.ts       # streaming study-guide markdown
-      verse/route.ts       # single-verse ESV text for hover preview
   components/
     study-form.tsx         # input form + orchestration
     study-results.tsx      # passage, cross-ref cards, streamed guide, copy/export
-    verse-hover.tsx         # popover-based verse preview
     markdown.tsx           # markdown rendering
     ui/                    # shadcn/ui components
   lib/

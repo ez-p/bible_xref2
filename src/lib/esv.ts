@@ -84,15 +84,3 @@ export function fetchPassageText(reference: string): Promise<Passage> {
     "include-short-copyright": "false",
   });
 }
-
-export function fetchVerse(reference: string): Promise<Passage> {
-  return fetchFromEsv(reference, {
-    "include-headings": "false",
-    "include-verse-numbers": "true",
-    "include-footnotes": "false",
-    "include-footnote-body": "false",
-    "include-audio-link": "false",
-    "include-passage-references": "false",
-    "include-short-copyright": "false",
-  });
-}

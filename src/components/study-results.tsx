@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Markdown } from "@/components/markdown";
-import { VerseHover } from "@/components/verse-hover";
 import type { StudyData } from "@/lib/types";
 
 export function StudyResults({
@@ -40,9 +39,7 @@ export function StudyResults({
     <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>
-            <VerseHover reference={data.passage.canonical} />
-          </CardTitle>
+          <CardTitle>{data.passage.canonical}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="whitespace-pre-line text-sm leading-relaxed">{data.passage.text}</p>
@@ -55,9 +52,7 @@ export function StudyResults({
           {data.references.map((ref) => (
             <Card key={ref.reference}>
               <CardHeader>
-                <CardTitle className="text-sm">
-                  <VerseHover reference={ref.reference} />
-                </CardTitle>
+                <CardTitle className="text-sm">{ref.reference}</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
                 <p className="whitespace-pre-line text-sm text-muted-foreground">{ref.text}</p>
