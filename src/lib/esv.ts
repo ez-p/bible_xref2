@@ -18,6 +18,8 @@ export class EsvApiError extends Error {
   }
 }
 
+const MAX_CACHE_ENTRIES = 2000;
+
 const cache = new Map<string, Passage>();
 
 function cacheKey(reference: string, params: Record<string, string>) {
@@ -69,6 +71,10 @@ async function fetchFromEsv(reference: string, params: Record<string, string>): 
     text: passages.join("\n\n").trim(),
   };
 
+  if (cache.size >= MAX_CACHE_ENTRIES) {
+    const oldestKey = cache.keys().next().value;
+    if (oldestKey !== undefined) cache.delete(oldestKey);
+  }
   cache.set(key, passage);
   return passage;
 }
