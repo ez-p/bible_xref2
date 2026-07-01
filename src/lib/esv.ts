@@ -1,6 +1,6 @@
 import type { Passage } from "@/lib/types";
 
-const ESV_BASE = "https://api.esv.org/v3/passage/text/";
+const ESV_BASE = "https://api.esv.org/v3/passage/html/";
 
 export class EsvNotFoundError extends Error {
   constructor(reference: string) {
@@ -86,12 +86,12 @@ async function fetchFromEsv(reference: string, params: Record<string, string>): 
 
 export function fetchPassageText(reference: string): Promise<Passage> {
   return fetchFromEsv(reference, {
-    "include-headings": "true",
+    "include-headings": "false",
     "include-verse-numbers": "true",
     "include-footnotes": "false",
-    "include-footnote-body": "false",
+    "include-css-link": "false",
     "include-audio-link": "false",
-    "include-passage-references": "false",
     "include-short-copyright": "false",
+    "include-passage-references": "false",
   });
 }

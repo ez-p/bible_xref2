@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Markdown } from "@/components/markdown";
+import { EsvHtml } from "@/components/esv-html";
 import type { StudyData } from "@/lib/types";
 
 export function StudyResults({
@@ -36,7 +37,7 @@ export function StudyResults({
           <CardTitle>{data.passage.canonical}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="whitespace-pre-line text-sm leading-relaxed">{data.passage.text}</p>
+          <EsvHtml html={data.passage.text} />
         </CardContent>
       </Card>
 
@@ -49,7 +50,7 @@ export function StudyResults({
                 <CardTitle className="text-sm">{ref.reference}</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
-                <p className="whitespace-pre-line text-sm text-muted-foreground">{ref.text}</p>
+                {ref.text && <EsvHtml html={ref.text} />}
                 <p className="text-sm italic">{ref.reason}</p>
               </CardContent>
             </Card>
