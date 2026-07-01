@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { StudyResults } from "@/components/study-results";
-import type { StudyData } from "@/lib/types";
+import type { StudySession } from "@/lib/types";
 
 type Phase = "idle" | "loading-study" | "streaming-guide" | "done" | "error";
 
@@ -21,7 +21,7 @@ export function StudyForm() {
   const [reference, setReference] = useState("");
   const [question, setQuestion] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
-  const [studyData, setStudyData] = useState<StudyData | null>(null);
+  const [studyData, setStudyData] = useState<StudySession | null>(null);
   const [guide, setGuide] = useState("");
 
   const isLoading = phase === "loading-study" || phase === "streaming-guide";
@@ -34,7 +34,7 @@ export function StudyForm() {
     setStudyData(null);
     setGuide("");
 
-    let data: StudyData;
+    let data: StudySession;
     try {
       const res = await fetch("/api/study", {
         method: "POST",
@@ -60,7 +60,7 @@ export function StudyForm() {
       const res = await fetch("/api/guide", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ token: data.token }),
       });
       if (!res.ok || !res.body) {
         const text = await res.text().catch(() => "");
@@ -88,7 +88,7 @@ export function StudyForm() {
     <div className="flex flex-col gap-8">
       <Card className="print:hidden">
         <CardContent>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4" autoComplete="off">
             <div className="flex flex-col gap-1.5">
               <label htmlFor="reference" className="text-sm font-medium">
                 Verse or range
@@ -99,6 +99,8 @@ export function StudyForm() {
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 disabled={isLoading}
+                maxLength={32}
+                autoComplete="off"
                 required
               />
             </div>
@@ -112,10 +114,12 @@ export function StudyForm() {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 disabled={isLoading}
+                maxLength={512}
+                autoComplete="off"
                 rows={3}
               />
             </div>
-            <div className="flex flex-col items-start gap-2">
+            <div className="flex items-center gap-3">
               <Button type="submit" disabled={isLoading || !reference.trim()}>
                 {isLoading && <Loader2Icon className="animate-spin" />}
                 {phase === "loading-study"
@@ -126,7 +130,7 @@ export function StudyForm() {
               </Button>
               <Popover>
                 <PopoverTrigger
-                  className="w-full text-center cursor-pointer text-sm font-medium text-amber-600 underline decoration-dotted underline-offset-4 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
+                  className="cursor-pointer text-sm font-medium text-amber-600 underline decoration-dotted underline-offset-4 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
                   render={<span />}
                   nativeButton={false}
                 >

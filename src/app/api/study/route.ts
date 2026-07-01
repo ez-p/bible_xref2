@@ -2,26 +2,38 @@ import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { anthropic, MODEL } from "@/lib/anthropic";
-import { CrossRefs } from "@/lib/schemas";
+import { CrossRefs, StudyRequestSchema } from "@/lib/schemas";
 import { fetchPassageText, EsvNotFoundError, EsvApiError } from "@/lib/esv";
+import { createSession } from "@/lib/session-store";
+import { checkRateLimit, getClientKey } from "@/lib/rate-limit";
 import type { CrossReference, StudyData } from "@/lib/types";
 
 export const runtime = "nodejs";
 
 export async function POST(req: Request) {
-  let body: { reference?: string; question?: string };
+  const { allowed, retryAfterSeconds } = checkRateLimit(`study:${getClientKey(req)}`);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again shortly." },
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds) } }
+    );
+  }
+
+  let rawBody: unknown;
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const reference = body.reference?.trim();
-  const question = body.question?.trim() || undefined;
-
-  if (!reference) {
-    return NextResponse.json({ error: "Please enter a Bible verse or range." }, { status: 400 });
+  const parsed = StudyRequestSchema.safeParse(rawBody);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: parsed.error.issues[0]?.message ?? "Invalid request body." },
+      { status: 400 }
+    );
   }
+  const { reference, question } = parsed.data;
 
   let passage;
   try {
@@ -91,5 +103,7 @@ For each cross-reference, give a precise verse or short verse range reference (e
     question,
   };
 
-  return NextResponse.json(data);
+  const token = createSession(data);
+
+  return NextResponse.json({ ...data, token });
 }

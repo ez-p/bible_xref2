@@ -14,3 +14,5 @@ export type StudyData = {
   references: CrossReference[];
   question?: string;
 };
+
+export type StudySession = StudyData & { token: string };

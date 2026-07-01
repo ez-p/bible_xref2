@@ -1,5 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { anthropic, MODEL } from "@/lib/anthropic";
+import { getSession } from "@/lib/session-store";
+import { checkRateLimit, getClientKey } from "@/lib/rate-limit";
+import { GuideRequestSchema } from "@/lib/schemas";
 import type { StudyData } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -36,18 +39,36 @@ Write in clear, warm, accessible prose. Do not include any text before the first
 }
 
 export async function POST(req: Request) {
-  let body: StudyData;
+  const { allowed, retryAfterSeconds } = checkRateLimit(`guide:${getClientKey(req)}`);
+  if (!allowed) {
+    return new Response("Too many requests. Please try again shortly.", {
+      status: 429,
+      headers: { "Retry-After": String(retryAfterSeconds) },
+    });
+  }
+
+  let rawBody: unknown;
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return new Response("Invalid request body", { status: 400 });
   }
 
-  if (!body?.passage || !Array.isArray(body.references)) {
-    return new Response("Missing passage or references", { status: 400 });
+  const parsed = GuideRequestSchema.safeParse(rawBody);
+  if (!parsed.success) {
+    return new Response(parsed.error.issues[0]?.message ?? "Invalid request body.", { status: 400 });
+  }
+  const { token } = parsed.data;
+
+  const session: StudyData | undefined = getSession(token);
+  if (!session) {
+    return new Response(
+      "This study session has expired or wasn't found. Please generate the study guide again.",
+      { status: 400 }
+    );
   }
 
-  const prompt = buildPrompt(body);
+  const prompt = buildPrompt(session);
 
   let claudeStream;
   try {
