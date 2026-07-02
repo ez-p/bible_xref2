@@ -157,14 +157,13 @@ export function StudyForm() {
                         explore.
                       </li>
                       <li>
-                        The most relevant cross-reference verses from elsewhere in Scripture are selected
+                        The most relevant cross-reference verses from elsewhere in scripture are selected
                         based on your original Bible passage for comparison.
                       </li>
                       <li>
-                        Each cross-referenced Bible verse is fetched, then a full study guide is
-                        generated with passage context, the cross-references and how they relate. Key
-                        themes, application, and discussion questions are generated from the Bible
-                        passages.
+                        A full study guide is generated with passage context, the cross-references, and
+                        how they relate. Key themes, application, and discussion questions are generated
+                        from the Bible passages.
                       </li>
                       <li>
                         Use Export or Print to save the finished guide.
