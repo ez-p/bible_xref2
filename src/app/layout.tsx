@@ -16,6 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Bible Cross-Reference Study Guide",
   description: "Generate a contextual Bible study guide with cross-references, powered by Claude.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
