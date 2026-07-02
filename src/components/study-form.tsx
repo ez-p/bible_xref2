@@ -8,10 +8,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { StudyResults } from "@/components/study-results";
 import type { StudySession } from "@/lib/types";
 
@@ -128,17 +131,20 @@ export function StudyForm() {
                   ? "Generating study guide..."
                   : "Generate Study Guide"}
               </Button>
-              <Popover>
-                <PopoverTrigger
+              <Dialog>
+                <DialogTrigger
                   className="cursor-pointer text-sm font-medium text-amber-600 underline decoration-dotted underline-offset-4 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300"
                   render={<span />}
                   nativeButton={false}
                 >
                   How does this work?
-                </PopoverTrigger>
-                <PopoverContent className="w-96">
+                </DialogTrigger>
+                <DialogContent
+                  initialFocus={false}
+                  className="flex max-h-[85vh] flex-col overflow-y-auto sm:max-w-md"
+                >
+                  <DialogTitle>How this works</DialogTitle>
                   <div className="flex flex-col gap-2 text-sm">
-                    <p className="font-medium">How this works</p>
                     <ol className="list-decimal space-y-1.5 pl-4 text-muted-foreground">
                       <li>
                         Enter a Bible verse or a small range of Bible verses (e.g.{" "}
@@ -173,8 +179,11 @@ export function StudyForm() {
                       study question!
                     </p>
                   </div>
-                </PopoverContent>
-              </Popover>
+                  <DialogFooter>
+                    <DialogClose render={<Button />}>Got it</DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
           </form>
         </CardContent>
