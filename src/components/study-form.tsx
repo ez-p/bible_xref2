@@ -105,6 +105,7 @@ export function StudyForm() {
                 maxLength={32}
                 autoComplete="off"
                 required
+                className="placeholder:text-muted-foreground/50"
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -120,6 +121,7 @@ export function StudyForm() {
                 maxLength={512}
                 autoComplete="off"
                 rows={3}
+                className="placeholder:text-muted-foreground/50"
               />
             </div>
             <div className="flex items-center gap-3">
